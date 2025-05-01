@@ -14,6 +14,10 @@
   border-collapse: collapse;
 }
 
+table,th,td{
+  border : 1px solid white;
+}
+
 body {
   width: 100vw;
   display: flex;
@@ -27,6 +31,7 @@ body {
     justify-content: flex-end;
     align-items: center;
     padding: 3vh 3vw;
+    background-color:white;
   }
   & > content {
     display:flex;
@@ -34,6 +39,7 @@ body {
     gap:10vh;
     width: 100%;
     padding: 5%;
+    /* 바차트 div */
     & > div#graph {
       display: flex;
       flex-direction: column;
@@ -79,5 +85,21 @@ body {
           }
       }
     }
+    /* 2. 값 편집 테이블 */
+    & #value-edit-inner-table{
+      width:100%;
+      & > .value-edit-inner-table-head > tr > th{
+        background-color:#bbb;
+        color:white;
+      }
+      & > .value-edit-inner-table-body:nth-child(2n+1){
+        background-color:#eee;
+      }
+      & > .value-edit-inner-table-body:nth-child(2n){
+        background-color: #ddd;
+      }
+    }
+
+
   }
 }
