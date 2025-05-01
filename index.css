@@ -18,7 +18,7 @@ table,th,td{
   border : 1px solid white;
 }
 
-body {
+body.chart_body {
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -32,6 +32,7 @@ body {
     align-items: center;
     padding: 3vh 3vw;
     background-color:white;
+    z-index:100;
   }
   & > content {
     display:flex;
@@ -39,7 +40,7 @@ body {
     gap:10vh;
     width: 100%;
     padding: 5%;
-    /* 바차트 div */
+    /* 1. 바차트 */
     & > div#graph {
       display: flex;
       flex-direction: column;
@@ -56,7 +57,7 @@ body {
           flex-direction: row;
           width:100%;
           height:95%;
-          & > div.chart-inner-line {
+          & > div#chart-inner-layer {
             width: 95%;
             height: 100%;
             border-left: 1px solid black;
@@ -64,6 +65,21 @@ body {
             display:flex;
             flex-direction: row;
             justify-content: space-around;
+            align-items:end;
+            & .chart_bar{
+              max-width:100px;
+              position:relative;
+              &:hover::after{
+                content:attr(data-value);
+                position:absolute;
+                left:-3vw;
+                white-space: pre-line;
+                font-size:1vw;
+                background-color: white;
+                padding:0.5rem;
+                border-radius:5px;
+              }
+            }
           }
           & > div.chart-inner-y-axis {
             width: 5%;
@@ -71,17 +87,19 @@ body {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            & > h4 {
+            & > p {
               font-size: 2vw;
               text-align: right;
               padding-right: calc(2vw - 5px);
             }
           }
         }
-        & > div.chart-inner-x-axis {
+        & > div#chart-inner-x-axis {
             width: 95%;
             height: 5%;
+            display:flex;
             justify-content: space-around;
+            font-size:1.5vw;
           }
       }
     }
@@ -92,14 +110,55 @@ body {
         background-color:#bbb;
         color:white;
       }
-      & > .value-edit-inner-table-body:nth-child(2n+1){
+      & > #value-edit-inner-table-body:nth-child(2n+1){
         background-color:#eee;
       }
-      & > .value-edit-inner-table-body:nth-child(2n){
+      & > #value-edit-inner-table-body:nth-child(2n){
         background-color: #ddd;
       }
     }
+    /* 3. 값 추가 input */
+    & > div#value-add-func{
+      &>div#value-add-func-group{
+        display:flex;
+        gap:0.5rem;
+        &>input{
+          font-size:1.2rem;
+          padding:0.2rem;
+          &:first-child{
+            width:15%;
+          }
+          &:nth-child(2){
+            width:70%;
+          }
+        }
+       
+      }
+    }
 
+    /* 4. 값 고급 편집 */
+    &>div#value-pro-edit{
+      &>div#value-pro-edit-group{
+        background-color: #eee;
+        border:1.2px solid;
+        width:100%;
+      }
+    }
 
   }
+}
+
+/* 버튼 통일 */
+.im_btn{
+  padding: 0 0.7rem;
+  letter-spacing: 0.05rem;
+  font-size:1.25rem;
+  margin-left:auto;
+}
+
+.block{
+  display:block;
+}
+h3{
+  font-weight:400;
 }
