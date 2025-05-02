@@ -6,37 +6,32 @@ document.addEventListener("DOMContentLoaded",function(){
     const $idInput = document.querySelector("#value-add-id-input");
     const $valueInput = document.querySelector("#value-add-value-input");
     const $innerEditTbody = document.querySelector("#value-edit-inner-table-body");
-
+    const $addBtn = document.querySelector("#value-add-func-btn");
     $idInput.addEventListener('keydown',e=>{
         isValidNum(e);
     });
     $valueInput.addEventListener('keydown',e=>{
         isValidNum(e);
     });
-
-
-    function isValidNum(e){
-        console.log(e);
+    $addBtn.addEventListener('click',function(e){
         
-        if(/\d/.test(e.key)||e.keyCode===8||e.keyCode===46){
-            
-        }else{
-            e.preventDefault();
-        }
-    }
+    })
     
     reset_chart();
 
     
     function reset_chart(){
+        $chartInnerLayer.innerHTML='';
+        $xAxisContext.innerHTML='';
+        $innerEditTbody.innerHTML='';
         if(chart_json_obj.length>0){
         // 최대값 도출
         let max_val = [...chart_json_obj].sort((a,b)=>b["value"]-a["value"])[0];
         // ID 오름차순 정렬
         chart_json_obj.sort((a,b)=>a["id"]-b["id"]);
         // 차트 y측 맥스값 기입
-        $yAxisMax.textContent = max_val["value"];
-
+        $yAxisMax.textContent = max_val["value"]===0?"":max_val["value"];
+   
         /* 데이터 변수 */
         chart_json_obj.map(el=>{
             /* bar 차트 그리기 */
@@ -67,7 +62,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
             td = document.createElement('td');
             input.value=el.value;
-            // input.addEventListener('keydown',(e)=>isValidNum(e));
+            input.addEventListener('keydown',(e)=>isValidNum(e));
             td.append(input);
             tr.append(td);
 
@@ -80,16 +75,38 @@ document.addEventListener("DOMContentLoaded",function(){
         });
 
         }else{
+            /* bar chart의 노데이터 */
             $yAxisMax.textContent=0;
-            
             $chartInnerLayer.textContent="No Data";
+
+            /* 데이터 테이블의 노데이터 */
+            let tr = document.createElement('tr');
+            let td = document.createElement('td');
+            td.setAttribute('colspan',3);
+            td.textContent='No Data';
+            tr.append(td);
+            $innerEditTbody.append(tr);
         }
     }
 
 
     function remove_obj(id){
-        console.log(id);
+        chart_json_obj=chart_json_obj.filter(el=>el.id!=id);
+        reset_chart();
     }
 
 })
 
+
+
+function isValidNum(e){
+    console.log(e);
+    
+    if(/\d/.test(e.key)||e.keyCode===8||e.keyCode===46){
+      /*   if(chart_json_obj.find(el=>el.id==e.target.value+e.key)){
+            중복값
+        }; */
+    }else{
+        e.preventDefault();
+    }
+}
