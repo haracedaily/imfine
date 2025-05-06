@@ -110,3 +110,13 @@ function isValidNum(e){
         e.preventDefault();
     }
 }
+
+function checkform(e){
+    event.preventDefault();
+    let testForm = document.querySelector('#testForm');
+    let formData = new FormData(testForm);
+    console.log(testForm);
+    console.log(formData);
+    console.log([...formData.entries()]);
+    console.log(this);
+}
