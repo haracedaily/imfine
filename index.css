@@ -122,14 +122,25 @@ body.chart_body {
       &>div#value-add-func-group{
         display:flex;
         gap:0.5rem;
-        overflow:visible;
+        position:relative;
+          width:100%;
+          &::after{
+            content:attr(data-text);
+            color:red;
+            position:absolute;
+            bottom:-1.5rem;
+          }
+    
         & input{
           font-size:1.2rem;
           padding:0.2rem;
+         
           &#value-add-id-input{
             width:15%;
             &::after{
-              content:"???";
+              position:absolute;
+              top:0;
+              content:attr(data-text);
               background-color:yellow;
             }
           }
@@ -147,6 +158,13 @@ body.chart_body {
         background-color: #eee;
         border:1.2px solid;
         width:100%;
+        position:relative;
+        &::after{
+          content:attr(data-pro);
+          color:red;
+          position:absolute;
+          bottom:-1.5rem;
+        }
       }
     }
 

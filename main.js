@@ -1,20 +1,31 @@
-let chart_json_obj = [{"id":0,"value":75},{"id":1,"value":20}];
-document.addEventListener("DOMContentLoaded",function(){
-    const $yAxisMax = document.querySelector("#chart-inner-y-axis-max");
-    const $xAxisContext = document.querySelector("#chart-inner-x-axis");
-    const $chartInnerLayer = document.querySelector("#chart-inner-layer");
-    const $idInput = document.querySelector("#value-add-id-input");
-    const $valueInput = document.querySelector("#value-add-value-input");
-    const $innerEditTbody = document.querySelector("#value-edit-inner-table-body");
-    const $addBtn = document.querySelector("#value-add-func-btn");
+let chart_json_obj = [{"id":'0',"value":75},{"id":'1',"value":20}];
+const $yAxisMax = document.querySelector("#chart-inner-y-axis-max");
+const $xAxisContext = document.querySelector("#chart-inner-x-axis");
+const $chartInnerLayer = document.querySelector("#chart-inner-layer");
+const $idInput = document.querySelector("#value-add-id-input");
+const $valueInput = document.querySelector("#value-add-value-input");
+const $innerEditTbody = document.querySelector("#value-edit-inner-table-body");
+const $addBtn = document.querySelector("#value-add-func-btn");
+const $addGroup = document.querySelector("#value-add-func-group");
+const $proTextarea = document.querySelector("#value-pro-edit-textarea");
+
+
+
     $idInput.addEventListener('keydown',e=>{
         isValidNum(e);
     });
+    $idInput.addEventListener('keyup',function(e){
+        isValidId(e);
+    })
     $valueInput.addEventListener('keydown',e=>{
         isValidNum(e);
     });
+    $valueInput.addEventListener('keyup',function(e){
+        ableBtn(e);
+    })
     $addBtn.addEventListener('click',function(e){
-        
+        addFunc(e);
+        reset_chart()
     })
     
     reset_chart();
@@ -68,11 +79,13 @@ document.addEventListener("DOMContentLoaded",function(){
 
             td = document.createElement('td');
             btn.textContent='삭제';
-            btn.addEventListener('click',()=>remove_obj(el.id));
+            btn.addEventListener('click',function(){remove_obj(event);});
             td.append(btn);
             tr.append(td);
             $innerEditTbody.append(tr);
+            
         });
+        $proTextarea.value=JSON.stringify(chart_json_obj).replaceAll("[","[\n\t").replaceAll("}","\n\t}").replaceAll("]","\n]").replaceAll("{","{\n\t").replaceAll(",",",\n\t");
 
         }else{
             /* bar chart의 노데이터 */
@@ -90,12 +103,12 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
 
-    function remove_obj(id){
-        chart_json_obj=chart_json_obj.filter(el=>el.id!=id);
-        reset_chart();
+    function remove_obj(e){
+        // chart_json_obj=chart_json_obj.filter(el=>el.id!=id); 바로 적용x => apply 버튼 클릭시 적용
+        // 따로 reset btn 제공
+        e.target.parentElement.parentElement.remove();
     }
 
-})
 
 
 
@@ -119,4 +132,64 @@ function checkform(e){
     console.log(formData);
     console.log([...formData.entries()]);
     console.log(this);
+}
+
+function isValidId(e){
+    $addBtn.setAttribute('disabled',true);
+    if(!!chart_json_obj.find(el=>el.id==e.target.value)){
+        $addGroup.dataset.text='중복된 ID는 사용할 수 없습니다.';
+    }else{
+        $addGroup.dataset.text='';
+        if(e.target.value?.length>0){
+            $addGroup.dataset.text='사용가능한 id입니다.';
+            if($valueInput.value?.length>0){
+                $addBtn.removeAttribute('disabled');
+            }
+        }
+    }
+    if(e.key=='Tab'){
+        $valueInput.focus();
+    }
+}
+
+function ableBtn(e){
+    $addBtn.setAttribute('disabled',true);
+    if(e.target.value?.length>0&&$addGroup.dataset.text=='사용가능한 id입니다.'){
+        $addBtn.removeAttribute('disabled');
+    };
+    if(e.key=='Tab'){
+        $idInput.focus();
+    }
+}
+
+function addFunc(e){
+    chart_json_obj.push({id:String($idInput.value),value:$valueInput.value});
+    $idInput.value='';
+    $valueInput.value='';
+    $addGroup.dataset.text='';
+}
+
+function tableApply(){
+    chart_json_obj=[];
+    [...$innerEditTbody.children].map(el=>{
+        chart_json_obj.push({id:String(el.children[0].textContent),value:el.children[1].children[0].value});
+    });
+    reset_chart();
+}
+
+function proApply(e){
+    console.log(e);
+    console.log($proTextarea.value.replaceAll(JSON.stringify(chart_json_obj),''));
+    try{
+        chart_json_obj=JSON.parse($proTextarea.value);
+        reset_chart();
+    }catch{
+        $proTextarea.backgroundColor='red';
+        $proTextarea.parentElement.dataset.pro = "입력양식을 맞춰주세요.";
+    }
+    
+}
+
+function proEditKeydown(e){
+ 
 }

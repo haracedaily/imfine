@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./index.css">
-    <script src="./main.js"></script>
+
 </head>
 <body class="chart_body">
     <header>
@@ -52,29 +52,27 @@
 
                 </tbody>
             </table>
-            <button class="im_btn block" id="value-edit-table-apply-btn">Apply</button>
+            <button class="im_btn block" id="value-edit-table-apply-btn" onclick="tableApply()">Apply</button>
         </div>
         <div id="value-add-func">
             <h3>3.값 추가</h3>
             <div id="value-add-func-group">
-                <form onsubmit="checkform()" id="testForm">
-
-                    <input type="text" placeholder="ID" id="value-add-id-input" name="id">
+                    <input type="text" placeholder="ID" id="value-add-id-input"  name="id">
                     <input type="text" placeholder="VALUE" id="value-add-value-input" name="value">
-                    <button type="submit" class="im_btn block" id="value-add-func-btn">Add</button>
-                </form>
+                    <button type="submit" class="im_btn block" id="value-add-func-btn" disabled>Add</button>
             </div>
         </div>
         <div id="value-pro-edit">
             <h3>4.값 고급 편집</h3>
             <div id="value-pro-edit-group">
-                <textarea style="resize: none; width:100%;height:100%;"></textarea>
+                <textarea style="resize: none; width:100%;height:100%;" id="value-pro-edit-textarea" onkeydown="proEditKeydown(event)" rows="20"></textarea>
             </div>
-            <button class="im_btn block">Apply</button>
+            <button class="im_btn block" onclick="proApply()">Apply</button>
         </div>
     </content>
     <footer>
 
     </footer>
 </body>
+<script src="./main.js"></script>
 </html>
