@@ -35,7 +35,7 @@ const $proTextarea = document.querySelector("#value-pro-edit-textarea");
     reset_chart();
 
     /* 함수 선언 */
-    
+    /* 차트 리셋 함수 */
     function reset_chart(){
         $chartInnerLayer.innerHTML='';
         $xAxisContext.innerHTML='';
