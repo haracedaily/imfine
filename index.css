@@ -100,6 +100,11 @@ body.chart_body {
             display:flex;
             justify-content: space-around;
             font-size:1.5vw;
+            &>h5{
+              width:10%;
+              max-width:100px;
+              text-align:center;
+            }
           }
       }
     }
@@ -154,17 +159,17 @@ body.chart_body {
 
     /* 4. 값 고급 편집 */
     &>div#value-pro-edit{
+      position:relative;
+      &::after{
+        content:attr(data-pro);
+        color:red;
+        position:absolute;
+        bottom:0;
+      }
       &>div#value-pro-edit-group{
         background-color: #eee;
         border:1.2px solid;
         width:100%;
-        position:relative;
-        &::after{
-          content:attr(data-pro);
-          color:red;
-          position:absolute;
-          bottom:-1.5rem;
-        }
       }
     }
 
