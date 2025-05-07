@@ -193,9 +193,12 @@ function proApply(e){
                 chart_json_obj.push(element);
             }
         });
+        /* apply 된다면 color=black */
         $proTextarea.style.color="black";
+        $proTextarea.parentElement.parentElement.dataset.pro = "";
         reset_chart();
     }catch{
+        /* 만약 안된다면 color=red, ::after content */
         $proTextarea.style.color="red";
         $proTextarea.parentElement.parentElement.dataset.pro = "입력양식을 맞춰주세요.";
     }
