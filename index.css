@@ -68,6 +68,7 @@ body.chart_body {
             align-items:end;
             & .chart_bar{
               max-width:100px;
+              min-height:2%;
               position:relative;
               &:hover::after{
                 content:attr(data-value);
@@ -88,7 +89,7 @@ body.chart_body {
             flex-direction: column;
             justify-content: space-between;
             & > p {
-              font-size: 2vw;
+              font-size: 1.8vw;
               text-align: right;
               padding-right: calc(2vw - 5px);
             }
@@ -120,6 +121,18 @@ body.chart_body {
       }
       & > #value-edit-inner-table-body:nth-child(2n){
         background-color: #ddd;
+      }
+      & > #value-edit-inner-table-body tr{
+        &>td:first-child{
+          text-align:center;
+        }
+        &>td:last-child{
+          text-align:center;
+          &>button{
+            width:50%;
+            padding:0.3rem;
+          }
+        }
       }
     }
     /* 3. 값 추가 input */
